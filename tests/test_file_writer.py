@@ -7,7 +7,13 @@ UTF-8 multibyte characters that straddle the buffer boundary.
 import os
 import tempfile
 
-from src.file_writer import BUFFER_SIZE, _utf8_safe_split, read_file, save_file
+from src.file_writer import BUFFER_SIZE, _utf8_safe_split, save_file
+
+
+def _read_file(filepath: str) -> str:
+    """Read a file and return its content as a string (test helper)."""
+    with open(filepath, "rb") as f:
+        return f.read().decode("utf-8")
 
 
 class TestUtf8SafeSplit:
@@ -68,7 +74,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            assert read_file(filepath) == content
+            assert _read_file(filepath) == content
         finally:
             os.unlink(filepath)
 
@@ -79,7 +85,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            assert read_file(filepath) == content
+            assert _read_file(filepath) == content
         finally:
             os.unlink(filepath)
 
@@ -90,7 +96,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            assert read_file(filepath) == content
+            assert _read_file(filepath) == content
         finally:
             os.unlink(filepath)
 
@@ -109,7 +115,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            result = read_file(filepath)
+            result = _read_file(filepath)
             assert result == content
         finally:
             os.unlink(filepath)
@@ -124,7 +130,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            result = read_file(filepath)
+            result = _read_file(filepath)
             assert result == content
         finally:
             os.unlink(filepath)
@@ -140,7 +146,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            result = read_file(filepath)
+            result = _read_file(filepath)
             assert result == content
         finally:
             os.unlink(filepath)
@@ -160,7 +166,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            result = read_file(filepath)
+            result = _read_file(filepath)
             assert result == content
         finally:
             os.unlink(filepath)
@@ -173,7 +179,7 @@ class TestSaveFile:
             filepath = f.name
         try:
             save_file(content, filepath)
-            result = read_file(filepath)
+            result = _read_file(filepath)
             assert result == content
             assert len(result) == len(content)
         finally:

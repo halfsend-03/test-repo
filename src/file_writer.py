@@ -10,6 +10,7 @@ sequences are never split across buffer boundaries.
 """
 
 BUFFER_SIZE = 65536  # 64KB
+assert BUFFER_SIZE >= 4, "BUFFER_SIZE must be >= 4 to guarantee forward progress with multibyte UTF-8"
 
 
 def _utf8_safe_split(data: bytes, boundary: int) -> int:
@@ -92,14 +93,3 @@ def save_file(content: str, filepath: str) -> None:
             offset = end
 
 
-def read_file(filepath: str) -> str:
-    """Read a file and return its content as a string.
-
-    Args:
-        filepath: The path to read the file from.
-
-    Returns:
-        The file content as a string.
-    """
-    with open(filepath, "rb") as f:
-        return f.read().decode("utf-8")
