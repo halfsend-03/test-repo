@@ -10,7 +10,8 @@ sequences are never split across buffer boundaries.
 """
 
 BUFFER_SIZE = 65536  # 64KB
-assert BUFFER_SIZE >= 4, "BUFFER_SIZE must be >= 4 to guarantee forward progress with multibyte UTF-8"
+if BUFFER_SIZE < 4:
+    raise ValueError("BUFFER_SIZE must be >= 4 to guarantee forward progress with multibyte UTF-8")
 
 
 def _utf8_safe_split(data: bytes, boundary: int) -> int:
